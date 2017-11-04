@@ -13,6 +13,8 @@ public interface MainContract {
         void showLoadingBar(boolean show);
 
         void showData(List<GithubRepoModel> data, int page);
+
+        void showError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -49,7 +49,8 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void error(@Nullable Throwable throwable) {
-
+                presenterView.showLoadingBar(false);
+                presenterView.showError(throwable);
             }
         });
     }

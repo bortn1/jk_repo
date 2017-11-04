@@ -21,4 +21,9 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     public void showData(List<GithubRepoModel> data, int page) {
 
     }
+
+    @Override
+    public void showError(Throwable throwable) {
+
+    }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -70,6 +71,24 @@ public class MainPresenterTest {
         verify(view, atLeastOnce()).showLoadingBar(false);
 
         verify(view, atLeastOnce()).showData(data, TestUtils.FIRST_PAGE);
+    }
+
+    @Test
+    public void itShouldVerifyThatDataForTheFirstPageIsNotShownButErrorIsShown() {
+        mainPresenter.getData(TestUtils.FIRST_PAGE);
+
+        verify(view, atLeastOnce()).showLoadingBar(true);
+
+        verify(githubRepo, atLeastOnce()).getGithubData(eq(TestUtils.FIRST_PAGE), mLoadCallbackCaptor.capture());
+
+        fillData();
+
+        Throwable error = new Throwable();
+
+        mLoadCallbackCaptor.getValue().error(error);
+        verify(view, atLeastOnce()).showLoadingBar(false);
+        verify(view, never()).showData(data, TestUtils.FIRST_PAGE);
+        verify(view, atLeastOnce()).showError(error);
     }
 
     private void fillData() {
