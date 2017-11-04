@@ -11,6 +11,7 @@ import com.ab.github_api_pq.network.retrofit.repo.OnNetworkResponse;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 public class MainPresenter implements MainContract.Presenter {
     private final GithubRepo githubRepo;
@@ -19,6 +20,7 @@ public class MainPresenter implements MainContract.Presenter {
     private int page = 1;
     private int startPage = 1;
 
+    @Inject
     public MainPresenter(GithubRepo githubRepo) {
         this.githubRepo = githubRepo;
     }
