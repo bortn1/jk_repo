@@ -26,4 +26,9 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     public void showError(Throwable throwable) {
 
     }
+
+    @Override
+    public void startBottomLoading(boolean show) {
+
+    }
 }

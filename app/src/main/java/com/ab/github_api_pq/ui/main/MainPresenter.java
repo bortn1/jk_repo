@@ -36,12 +36,24 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void getData(int currentPage) {
         if (presenterView != null) {
-            presenterView.showLoadingBar(true);
+            if (currentPage > startPage) {
+                presenterView.startBottomLoading(true);
+            } else {
+                page = startPage;
+                presenterView.showLoadingBar(true);
+            }
         }
+
         githubRepo.getGithubData(currentPage, new OnNetworkResponse<List<GithubRepoModel>>() {
             @Override
             public void success(@NonNull List<GithubRepoModel> githubRepoModels) {
-                presenterView.showLoadingBar(false);
+                if (currentPage > startPage) {
+                    presenterView.startBottomLoading(false);
+                } else {
+                    presenterView.showLoadingBar(false);
+                }
+
+
                 if (githubRepoModels.size() > 0) {
                     presenterView.showData(githubRepoModels, currentPage);
                 }

@@ -91,6 +91,20 @@ public class MainPresenterTest {
         verify(view, atLeastOnce()).showError(error);
     }
 
+    @Test
+    public void itShouldVerifyThatDataForTheNextPageIsShown() {
+        mainPresenter.getData(TestUtils.LAST_PAGE);
+
+        verify(view, atLeastOnce()).startBottomLoading(true);
+        verify(githubRepo, atLeastOnce()).getGithubData(eq(TestUtils.LAST_PAGE), mLoadCallbackCaptor.capture());
+        fillData();
+        mLoadCallbackCaptor.getValue().success(data);
+
+        verify(view, atLeastOnce()).startBottomLoading(false);
+
+        verify(view, atLeastOnce()).showData(data, TestUtils.LAST_PAGE);
+    }
+
     private void fillData() {
         TestUtils.fillGithubRepoModel();
         data.add(TestUtils.getGithubRepoModel());

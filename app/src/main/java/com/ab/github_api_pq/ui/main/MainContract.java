@@ -15,6 +15,8 @@ public interface MainContract {
         void showData(List<GithubRepoModel> data, int page);
 
         void showError(Throwable throwable);
+
+        void startBottomLoading(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {
