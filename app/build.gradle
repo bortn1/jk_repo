@@ -1,5 +1,22 @@
 apply plugin: 'com.android.application'
 
+buildscript {
+    ext.support_library_version = '26.1.0'
+    ext.junitVersion = '4.12'
+    ext.mockitoVersion = '1.10.19'
+    ext.hamcrestVersion = '1.3'
+
+    ext.retrofit_version = '2.3.0'
+    ext.rxjava_version = '1.3.0'
+    ext.rxandroid_version = '1.2.1'
+
+    ext.dagger_version = '2.12'
+
+    ext.butter_knife_version = "8.8.1"
+
+    ext.espresso_version = "3.0.1"
+}
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -16,12 +33,49 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
+    implementation "com.android.support:cardview-v7:$support_library_version"
+
+    // Dependencies for local tests
+    testImplementation "junit:junit:$junitVersion"
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+
+    // retrofit + rx
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile "io.reactivex:rxjava:$rxjava_version"
+    compile "io.reactivex:rxandroid:$rxandroid_version"
+
+    // Dagger dependencies
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile "com.google.dagger:dagger:$dagger_version"
+    compile "com.google.dagger:dagger-android:$dagger_version"
+    compile "com.google.dagger:dagger-android-support:$dagger_version"
+    compile 'com.google.code.gson:gson:2.8.2'
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // View binging
+    compile "com.jakewharton:butterknife:$butter_knife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
+
+    // Android Instrumentation test
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+
+    androidTestCompile "com.android.support.test.espresso.idling:idling-concurrent:$espresso_version"
+    compile "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
 }
