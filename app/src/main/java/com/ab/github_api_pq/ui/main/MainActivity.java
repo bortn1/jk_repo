@@ -31,4 +31,9 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     public void startBottomLoading(boolean show) {
 
     }
+
+    @Override
+    public void lastPage(boolean show) {
+
+    }
 }

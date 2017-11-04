@@ -17,10 +17,14 @@ public interface MainContract {
         void showError(Throwable throwable);
 
         void startBottomLoading(boolean show);
+
+        void lastPage(boolean show);
     }
 
     interface Presenter extends BasePresenter<View> {
 
         void getData(int page);
+
+        void getDataOnBottomList(boolean bottom);
     }
 }

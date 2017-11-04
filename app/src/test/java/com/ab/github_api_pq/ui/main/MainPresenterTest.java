@@ -105,6 +105,34 @@ public class MainPresenterTest {
         verify(view, atLeastOnce()).showData(data, TestUtils.LAST_PAGE);
     }
 
+    @Test
+    public void itShouldVerifyThatOnceYouScrollToTheBottomDataIsShown() {
+        mainPresenter.getDataOnBottomList(true);
+
+        verify(view, atLeastOnce()).startBottomLoading(true);
+        verify(githubRepo, atLeastOnce()).getGithubData(eq(TestUtils.LAST_PAGE), mLoadCallbackCaptor.capture());
+        fillData();
+        mLoadCallbackCaptor.getValue().success(data);
+
+        verify(view, atLeastOnce()).startBottomLoading(false);
+        verify(view, atLeastOnce()).lastPage(false);
+
+        verify(view, atLeastOnce()).showData(data, TestUtils.LAST_PAGE);
+    }
+
+    @Test
+    public void itShouldVerifyThatWhenLastPageIsVisibleDataIsNotShownAnymore() {
+        mainPresenter.getDataOnBottomList(true);
+        verify(view, atLeastOnce()).startBottomLoading(true);
+        verify(githubRepo, atLeastOnce()).getGithubData(eq(TestUtils.LAST_PAGE), mLoadCallbackCaptor.capture());
+
+        mLoadCallbackCaptor.getValue().success(new ArrayList<>());
+
+        verify(view, atLeastOnce()).startBottomLoading(false);
+        verify(view, never()).showData(data, TestUtils.LAST_PAGE);
+        verify(view, atLeastOnce()).lastPage(true);
+    }
+
     private void fillData() {
         TestUtils.fillGithubRepoModel();
         data.add(TestUtils.getGithubRepoModel());
