@@ -1,6 +1,6 @@
 package com.ab.github_api_pq.ui.main;
 
-import android.support.v7.app.AppCompatActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends DaggerAppCompatActivity implements MainContract.View {
 }
