@@ -1,7 +1,6 @@
 package com.ab.github_api_pq.ui.main;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
@@ -42,7 +41,6 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     private int startPage = 1;
     private boolean isLoadingShow = false;
     private boolean isLastPageShow;
-    private boolean isActivityDestroyed = false;
     private RecyclerPaginationAdapter recyclerPaginationAdapter;
 
 
@@ -92,16 +90,8 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
 
     @Override
     protected void onDestroy() {
-        isActivityDestroyed = true;
         mainPresenter.deleteView();
         super.onDestroy();
-    }
-
-    @Override
-    public boolean isActive() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            return isDestroyed();
-        } else return isActivityDestroyed;
     }
 
     @Override

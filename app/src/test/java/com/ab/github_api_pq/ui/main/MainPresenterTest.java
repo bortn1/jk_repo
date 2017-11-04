@@ -42,8 +42,6 @@ public class MainPresenterTest {
         mainPresenter = new MainPresenter(githubRepo);
         mainPresenter.takeView(view);
         data = new ArrayList<>();
-
-        when(view.isActive()).thenReturn(true);
     }
 
     @Test

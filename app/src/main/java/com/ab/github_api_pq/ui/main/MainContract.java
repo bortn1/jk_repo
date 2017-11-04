@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface MainContract {
     interface View {
-        boolean isActive();
-
         void showLoadingBar(boolean show);
 
         void showData(List<GithubRepoModel> data, int page);

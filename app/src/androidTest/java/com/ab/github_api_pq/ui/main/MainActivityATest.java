@@ -1,5 +1,7 @@
 package com.ab.github_api_pq.ui.main;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -8,6 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.ab.github_api_pq.R;
+import com.ab.github_api_pq.ui.utils.TestConsts;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,15 +23,18 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.ab.github_api_pq.ui.main.TestConsts.FIRST_VISIBLE_ITEM;
-import static com.ab.github_api_pq.ui.main.TestConsts.FIRST_VISIBLE_ITEM_ON_SECOND_PAGE;
-import static com.ab.github_api_pq.ui.main.TestConsts.LAST_VISIBLE_ITEM_ON_LAST_PAGE;
-import static com.ab.github_api_pq.ui.main.TestConsts.MAXIMUM_ELEMENTS_PER_TASK;
+import static com.ab.github_api_pq.ui.utils.TestConsts.FIRST_VISIBLE_ITEM;
+import static com.ab.github_api_pq.ui.utils.TestConsts.FIRST_VISIBLE_ITEM_ON_SECOND_PAGE;
+import static com.ab.github_api_pq.ui.utils.TestConsts.LAST_VISIBLE_ITEM_ON_LAST_PAGE;
+import static com.ab.github_api_pq.ui.utils.TestConsts.MAXIMUM_ELEMENTS_PER_TASK;
 import static org.hamcrest.Matchers.allOf;
 
+/**
+ * Created by andrewbortnichuk on 04/11/2017.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainActivityATest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
@@ -40,7 +46,7 @@ public class MainActivityTest {
 
     @Test
     public void dataIsLoadedOnTheScreen() {
-        verifyThatTextDisplayedOnTheScreen(FIRST_VISIBLE_ITEM, FIRST_VISIBLE_ITEM);
+        verifyThatTextDisplayedOnTheScreen(TestConsts.FIRST_VISIBLE_ITEM, FIRST_VISIBLE_ITEM);
     }
 
     @Test
@@ -67,6 +73,37 @@ public class MainActivityTest {
         }
 
         verifyThatTextDisplayedOnTheScreen(LAST_VISIBLE_ITEM_ON_LAST_PAGE, LAST_VISIBLE_ITEM_ON_LAST_PAGE);
+    }
+
+    @Test
+    public void dataIsLoadedOfflineOnTheScreen() {
+        onView(withId(R.id.recycler_view))
+                .perform(RecyclerViewActions.scrollToPosition(MAXIMUM_ELEMENTS_PER_TASK));
+
+        WifiManager wifi = (WifiManager) mActivityTestRule.getActivity().getSystemService(Context.WIFI_SERVICE);
+        if (wifi.isWifiEnabled()) {
+            wifi.setWifiEnabled(false);
+        }
+
+        //needed to wait that wifi is really switched off
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.recycler_view))
+                .perform(RecyclerViewActions.scrollToPosition(MAXIMUM_ELEMENTS_PER_TASK));
+
+        verifyThatTextDisplayedOnTheScreen(TestConsts.FIRST_VISIBLE_ITEM, FIRST_VISIBLE_ITEM);
+
+        wifi.setWifiEnabled(true);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void verifyThatTextDisplayedOnTheScreen(String textForId, String textToCheck) {
