@@ -3,7 +3,9 @@ package com.ab.github_api_pq.ui.main;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import com.ab.github_api_pq.R;
 import com.ab.github_api_pq.model.GithubRepoModel;
 import com.ab.github_api_pq.ui.main.adapter.RecyclerPaginationAdapter;
 import com.ab.github_api_pq.ui.main.listener.PaginationScrollListener;
+import com.ab.github_api_pq.utils.EspressoIdlingResource;
 
 import java.util.List;
 
@@ -166,5 +169,10 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
             return RealmQuery.createQuery(Realm.getDefaultInstance(),
                     GithubRepoModel.class).findAll();
         } else return null;
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

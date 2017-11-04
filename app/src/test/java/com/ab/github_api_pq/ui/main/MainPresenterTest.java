@@ -3,6 +3,7 @@ package com.ab.github_api_pq.ui.main;
 import com.ab.github_api_pq.model.GithubRepoModel;
 import com.ab.github_api_pq.network.retrofit.repo.GithubRepo;
 import com.ab.github_api_pq.network.retrofit.repo.OnNetworkResponse;
+import com.ab.github_api_pq.utils.TestUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -156,7 +157,6 @@ public class MainPresenterTest {
     }
 
     private void fillData() {
-        TestUtils.fillGithubRepoModel();
         data.add(TestUtils.getGithubRepoModel());
         data.add(TestUtils.getGithubRepoModel());
         data.add(TestUtils.getGithubRepoModel());

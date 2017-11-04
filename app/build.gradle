@@ -17,6 +17,7 @@ buildscript {
     ext.butter_knife_version = "8.8.1"
 
     ext.espresso_version = "3.0.1"
+    ext.okhttp_version = "3.7.0"
 }
 
 android {
@@ -51,12 +52,13 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.mockito:mockito-all:$mockitoVersion"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     // retrofit + rx
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "io.reactivex:rxjava:$rxjava_version"
     implementation "io.reactivex:rxandroid:$rxandroid_version"
 

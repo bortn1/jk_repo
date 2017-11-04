@@ -1,5 +1,7 @@
 package com.ab.github_api_pq.model;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,9 +13,6 @@ public class GithubRepoModel extends RealmObject {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("name")
-    @Expose
-    private String name;
     @SerializedName("full_name")
     @Expose
     private String fullName;
@@ -21,36 +20,22 @@ public class GithubRepoModel extends RealmObject {
     @Expose
     private String htmlUrl;
 
+
+    public GithubRepoModel() {
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    public GithubRepoModel(Integer id, String name) {
+        this.id = id;
+        this.fullName = name;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getFullName() {
         return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getHtmlUrl() {
-        return htmlUrl;
-    }
-
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
     }
 
 }
