@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+apply plugin: 'jacoco-android'
 
 buildscript {
     ext.support_library_version = '26.1.0'
@@ -47,35 +49,34 @@ dependencies {
 
     // Dependencies for local tests
     testImplementation "junit:junit:$junitVersion"
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.mockito:mockito-all:$mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.mockito:mockito-all:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
 
     // retrofit + rx
-    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile "io.reactivex:rxjava:$rxjava_version"
-    compile "io.reactivex:rxandroid:$rxandroid_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation "io.reactivex:rxjava:$rxjava_version"
+    implementation "io.reactivex:rxandroid:$rxandroid_version"
 
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile "com.google.dagger:dagger:$dagger_version"
-    compile "com.google.dagger:dagger-android:$dagger_version"
-    compile "com.google.dagger:dagger-android-support:$dagger_version"
-    compile 'com.google.code.gson:gson:2.8.2'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    implementation 'com.google.code.gson:gson:2.8.2'
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // View binging
-    compile "com.jakewharton:butterknife:$butter_knife_version"
+    implementation "com.jakewharton:butterknife:$butter_knife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
 
     // Android Instrumentation test
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
 
-    androidTestCompile "com.android.support.test.espresso.idling:idling-concurrent:$espresso_version"
-    compile "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso.idling:idling-concurrent:$espresso_version"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
 }

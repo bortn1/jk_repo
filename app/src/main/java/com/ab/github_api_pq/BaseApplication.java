@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class BaseApplication extends DaggerApplication {
@@ -19,7 +21,15 @@ public class BaseApplication extends DaggerApplication {
     GithubRepo githubRepo;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        RealmConfiguration config = new RealmConfiguration.Builder().name("payconiq.realm").build();
+        Realm.setDefaultConfiguration(config);
+    }
+
+    @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        Realm.init(this);
         AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
         appComponent.inject(this);
         return appComponent;

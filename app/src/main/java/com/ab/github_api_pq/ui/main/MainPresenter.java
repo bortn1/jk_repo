@@ -19,6 +19,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View presenterView;
     private int page = 1;
     private int startPage = 1;
+    private boolean isLocal = false;
 
     @Inject
     public MainPresenter(GithubRepo githubRepo) {
@@ -49,6 +50,8 @@ public class MainPresenter implements MainContract.Presenter {
         githubRepo.getGithubData(currentPage, new OnNetworkResponse<List<GithubRepoModel>>() {
             @Override
             public void success(@NonNull List<GithubRepoModel> githubRepoModels) {
+                isLocal = false;
+
                 if (currentPage > startPage) {
                     presenterView.startBottomLoading(false);
                 } else {
@@ -67,17 +70,27 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void error(@Nullable Throwable throwable) {
                 presenterView.showLoadingBar(false);
-                presenterView.showError(throwable);
+                presenterView.handleErrorBehaviour(throwable);
             }
         });
     }
 
     @Override
     public void getDataOnBottomList(boolean bottom) {
-        if (bottom) {
+        if (bottom && !isLocal) {
             page++;
             getData(page);
         }
+    }
+
+    @Override
+    public void isLocal(boolean isLocal) {
+        this.isLocal = isLocal;
+    }
+
+    @Override
+    public void setPage(int page) {
+        this.page = page;
     }
 
 

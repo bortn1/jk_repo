@@ -105,6 +105,15 @@ public class RecyclerPaginationAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
+    public void addAllLocal(List<GithubRepoModel> moveResults) {
+        isLocal = true;
+        clear();
+
+        for (GithubRepoModel result : moveResults) {
+            add(result);
+        }
+    }
+
     public void addLoadingFooter() {
         isLoadingAdded = true;
         add(new GithubRepoModel());

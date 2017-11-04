@@ -17,11 +17,14 @@ import com.ab.github_api_pq.ui.main.listener.PaginationScrollListener;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public class MainActivity extends DaggerAppCompatActivity implements MainContract.View {
     @BindView(R.id.recycler_view)
@@ -116,11 +119,29 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     }
 
     @Override
-    public void showError(Throwable throwable) {
-        String errorMessage = getString(R.string.error_text) + throwable.getLocalizedMessage();
-        Snackbar.make(recyclerView, errorMessage,
-                Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry_snackbar, view ->
-                mainPresenter.getData(startPage)).setActionTextColor(Color.YELLOW).show();
+    public void handleErrorBehaviour(Throwable throwable) {
+        if (getLocalGithubRepoModels() != null &&
+                getLocalGithubRepoModels().size() > 0) {
+            mainPresenter.isLocal(true);
+            showLocalData(getLocalGithubRepoModels());
+        } else {
+            mainPresenter.setPage(0);
+            String errorMessage = getString(R.string.error_text) + throwable.getLocalizedMessage();
+            Snackbar.make(recyclerView, errorMessage,
+                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry_snackbar, view ->
+                    mainPresenter.getData(startPage)).setActionTextColor(Color.YELLOW).show();
+        }
+
+    }
+
+    private void showLocalData(List<GithubRepoModel> localGithubRepoModels) {
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        Snackbar snackbar = Snackbar.make(recyclerView, R.string.local_data_show_text, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.snackbar_dismiss, view -> snackbar.dismiss()).setActionTextColor(Color.YELLOW);
+        snackbar.show();
+        recyclerPaginationAdapter.addAllLocal(localGithubRepoModels);
     }
 
     @Override
@@ -137,5 +158,13 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
     @Override
     public void lastPage(boolean show) {
         isLastPageShow = show;
+    }
+
+    @Nullable
+    private List<GithubRepoModel> getLocalGithubRepoModels() {
+        if (Realm.getDefaultInstance() != null) {
+            return RealmQuery.createQuery(Realm.getDefaultInstance(),
+                    GithubRepoModel.class).findAll();
+        } else return null;
     }
 }

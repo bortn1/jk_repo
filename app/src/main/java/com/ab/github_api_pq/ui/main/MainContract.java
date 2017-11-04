@@ -14,7 +14,7 @@ public interface MainContract {
 
         void showData(List<GithubRepoModel> data, int page);
 
-        void showError(Throwable throwable);
+        void handleErrorBehaviour(Throwable throwable);
 
         void startBottomLoading(boolean show);
 
@@ -26,5 +26,9 @@ public interface MainContract {
         void getData(int page);
 
         void getDataOnBottomList(boolean bottom);
+
+        void isLocal(boolean local);
+
+        void setPage(int startPage);
     }
 }

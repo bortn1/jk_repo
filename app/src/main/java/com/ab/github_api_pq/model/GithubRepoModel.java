@@ -3,7 +3,11 @@ package com.ab.github_api_pq.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GithubRepoModel {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class GithubRepoModel extends RealmObject {
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
