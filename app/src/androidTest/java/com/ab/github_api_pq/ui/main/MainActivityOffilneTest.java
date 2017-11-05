@@ -33,18 +33,19 @@ public class MainActivityOffilneTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void before() {
+    public void switchOffWifi() {
         InternetUtils.connectWifi(mActivityTestRule.getActivity(), false);
     }
 
     @Test
-    public void dataIsLoadedOnTheScreen() {
+    public void WhenUserOpenAppWIFIIsDisabledandOfflineDataLoaded() {
         //needed to wait that wifi is really switched off
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         verifyThatTextDisplayedOnTheScreen(TestConsts.FIRST_VISIBLE_ITEM, FIRST_VISIBLE_ITEM);
     }
 
@@ -55,7 +56,7 @@ public class MainActivityOffilneTest {
     }
 
     @After
-    public void after() {
+    public void switchOnWifi() {
         InternetUtils.connectWifi(mActivityTestRule.getActivity(), true);
     }
 }
