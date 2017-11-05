@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Payconiq test task</string>
+
+    <string name="error_text">Please try again, error -</string>
+    <string name="retry_snackbar">Retry</string>
+    <string name="local_data_show_text">Local data shown</string>
+    <string name="snackbar_dismiss">Dismiss</string>
 </resources>
