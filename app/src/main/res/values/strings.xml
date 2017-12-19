@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Payconiq test task</string>
+    <string name="app_name">MVP App</string>
 
     <string name="error_text">Please try again, error -</string>
     <string name="retry_snackbar">Retry</string>

@@ -23,7 +23,7 @@ public class BaseApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        RealmConfiguration config = new RealmConfiguration.Builder().name("payconiq.realm").build();
+        RealmConfiguration config = new RealmConfiguration.Builder().name("mvp.realm").build();
         Realm.setDefaultConfiguration(config);
     }
 

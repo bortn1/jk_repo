@@ -90,8 +90,8 @@ public class MainActivity extends DaggerAppCompatActivity implements MainContrac
 
     @Override
     protected void onDestroy() {
-        mainPresenter.deleteView();
         super.onDestroy();
+        mainPresenter.deleteView();
     }
 
     @Override
