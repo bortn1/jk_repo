@@ -5,7 +5,7 @@ public class TestConsts {
 
     public static final String FIRST_VISIBLE_ITEM_ON_SECOND_PAGE = "16.";
 
-    public static final String LAST_VISIBLE_ITEM_ON_LAST_PAGE = "87.";
+    public static final String LAST_VISIBLE_ITEM_ON_LAST_PAGE = "90.";
 
     public static final int MAXIMUM_ELEMENTS_PER_TASK = 15;
 }

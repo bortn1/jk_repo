@@ -6,7 +6,7 @@ import com.ab.github_api_pq.ui.main.MainPresenter;
 
 import dagger.Binds;
 import dagger.Module;
-
+// specific activity module
 @Module
 public abstract class MainActivityModule {
     @Binds
